@@ -10,7 +10,8 @@ import Positions from "./Positions";
 import Summary from "./Summary";
 import WatchList from "./WatchList";
 import { GeneralContextProvider } from "./GeneralContext";
-
+import { Link } from "@mui/material";
+import Logout from "./Logout";
 const Dashboard = () => {
   return (
     <div className="dashboard-container">
@@ -25,6 +26,7 @@ const Dashboard = () => {
           <Route path="/positions" element={<Positions />} />
           <Route path="/funds" element={<Funds />} />
           <Route path="/apps" element={<Apps />} />
+          <Route path="/logout" element={<Logout />}></Route>
         </Routes>
       </div>
     </div>

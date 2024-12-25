@@ -1,17 +1,17 @@
-import React from "react";
-import { ToastContainer, toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
-// import home from "/Zerodha/dashboard/src/components/Home";
-function SignUp() {
-  const navigate = useNavigate();
+// import { ToastContainer, toast } from "react-toastify";
+// import "../style.css"
+const Login = () => {
+  // const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState("");
   const [inputValue, setInputValue] = useState({
     email: "",
     password: "",
-    username: "",
   });
-  const { email, password, username } = inputValue;
+  const { email, password } = inputValue;
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setInputValue({
@@ -19,21 +19,41 @@ function SignUp() {
       [name]: value,
     });
   };
+
+  const handleSuccess = (msg) => {
+    <div
+      style={{ width: "500px" }}
+      class=" alert alert-warning alert-dismissible fade show"
+      role="alert"
+    >
+      <strong>User login successfully</strong>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "https://zerodha-pq9f.onrender.com/signup",
+        "https://zerodha-pq9f.onrender.com/login",
         {
           ...inputValue,
         },
         { withCredentials: true }
       );
+      console.log(data);
       const { success, message } = data;
       if (success) {
+        setSuccessMessage(message);
         setTimeout(() => {
           window.location.href =
             "https://dashboard.d3bnl1cz0kxf11.amplifyapp.com";
+          console.log(data);
         }, 1000);
       } else {
         alert(message);
@@ -45,13 +65,18 @@ function SignUp() {
       ...inputValue,
       email: "",
       password: "",
-      username: "",
     });
   };
+
   return (
-    <div className="sig p-5" style={{ height: "800px" }}>
+    <div className="sig p-5" style={{ height: "700px" }}>
       <div style={{ marginLeft: "550px" }} className="form_container mt-5">
-        <h2>Signup Account</h2>
+        <h2>Login Account</h2>
+        {successMessage && (
+          <div className="alert alert-success" role="alert">
+            {successMessage}
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email">Email</label>
@@ -60,17 +85,6 @@ function SignUp() {
               name="email"
               value={email}
               placeholder="Enter your email"
-              onChange={handleOnChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="email">Username</label>
-            <input
-              type="text"
-              name="username"
-              value={username}
-              placeholder="Enter your username"
               onChange={handleOnChange}
               required
             />
@@ -88,12 +102,12 @@ function SignUp() {
           </div>
           <button type="submit">Submit</button>
           <span>
-            Already have an account? <Link to={"/login"}>Login</Link>
+            Already have an account? <Link to={"/signup"}>Signup</Link>
           </span>
         </form>
       </div>
     </div>
   );
-}
+};
 
-export default SignUp;
+export default Login;
