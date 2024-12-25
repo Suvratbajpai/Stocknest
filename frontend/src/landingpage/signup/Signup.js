@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
-// import home from "/Zerodha/dashboard/src/components/Home";
+import "react-toastify/dist/ReactToastify.css";
+
 function SignUp() {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
@@ -12,6 +12,7 @@ function SignUp() {
     username: "",
   });
   const { email, password, username } = inputValue;
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setInputValue({
@@ -19,35 +20,35 @@ function SignUp() {
       [name]: value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "https://zerodha-pq9f.onrender.com/signup",
-        {
-          ...inputValue,
-        },
+        "http://localhost:8000/signup",
+        { email, password, username },
         { withCredentials: true }
       );
       const { success, message } = data;
+
       if (success) {
-        setTimeout(() => {
-          window.location.href =
-            "https://dashboard.d3bnl1cz0kxf11.amplifyapp.com";
-        }, 1000);
+        toast.success("Signup successful! Redirecting to login...");
+        setTimeout(() => navigate("/login"), 1000);
       } else {
-        alert(message);
+        toast.error(message);
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong. Please try again.");
+      console.error(error);
     }
+
     setInputValue({
-      ...inputValue,
       email: "",
       password: "",
       username: "",
     });
   };
+
   return (
     <div className="sig p-5" style={{ height: "800px" }}>
       <div style={{ marginLeft: "550px" }} className="form_container mt-5">
@@ -65,7 +66,7 @@ function SignUp() {
             />
           </div>
           <div>
-            <label htmlFor="email">Username</label>
+            <label htmlFor="username">Username</label>
             <input
               type="text"
               name="username"
@@ -92,6 +93,7 @@ function SignUp() {
           </span>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

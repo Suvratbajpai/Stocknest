@@ -1,11 +1,11 @@
 import Hero from "./Hero";
-import Education from "./Eduction";
+import Education from "./Education";
 import Awards from "./Awards";
 import Pricing from "./Pricing";
 import Stats from "./Stats";
 import React from 'react';
 import OpenAccount from "../OpenAccount";
-import Navbar from "../Navbar";
+import Navbar from "./Navbar";
 import Footer from "../Footer";
 import { useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";

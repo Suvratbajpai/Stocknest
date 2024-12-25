@@ -40,7 +40,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "https://zerodha-pq9f.onrender.com/login",
+        "http://localhost:8000/login",
         {
           ...inputValue,
         },
@@ -52,7 +52,7 @@ const Login = () => {
         setSuccessMessage(message);
         setTimeout(() => {
           window.location.href =
-            "https://dashboard.d3bnl1cz0kxf11.amplifyapp.com";
+            "http://localhost:3001/";
           console.log(data);
         }, 1000);
       } else {

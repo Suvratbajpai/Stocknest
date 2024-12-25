@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const verifyCookie = async () => {
        const { data } = await axios.post(
-         "https://zerodha-pq9f.onrender.com",
+         "http://localhost:8000",
          {},
          { withCredentials: true }
        );
@@ -22,7 +22,7 @@ const Home = () => {
        setUsername(user);
        return status
          ? navigate('/')
-         : (removeCookie("token"), window.location.href="https://frontend.d1dk8zlerjmfx7.amplifyapp.com/login");
+         : (removeCookie("token"), window.location.href="http://localhost:3001/login");
         // :navigate('/')
     };
     verifyCookie();
