@@ -1,29 +1,38 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState, useContext } from "react";
 import axios from "axios";
-
-import GeneralContext from "./GeneralContext";
-
+import GeneralContext from "./GeneralContext"; // Ensure GeneralContext is a valid React context
 import "./BuyActionWindow.css";
 
 const BuyActionWindow = ({ uid }) => {
   const [stockQuantity, setStockQuantity] = useState(1);
   const [stockPrice, setStockPrice] = useState(0.0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleBuyClick = () => {
-    axios.post("http://localhost:8000/newOrder", {
-      name: uid,
-      qty: stockQuantity,
-      price: stockPrice,
-      mode: "BUY",
-    });
+  const { closeBuyWindow } = useContext(GeneralContext); // Ensure context provides this method
 
-    GeneralContext.closeBuyWindow();
+  const handleBuyClick = async () => {
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      await axios.post("http://localhost:8000/newOrder", {
+        name: uid,
+        qty: Number(stockQuantity), // Convert to number
+        price: Number(stockPrice), // Convert to number
+        mode: "BUY",
+      });
+      closeBuyWindow(); // Close the window on success
+    } catch (error) {
+      console.error("Error placing order:", error.message);
+      setErrorMessage("Failed to place the order. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCancelClick = () => {
-    GeneralContext.closeBuyWindow();
+    closeBuyWindow();
   };
 
   return (
@@ -36,6 +45,7 @@ const BuyActionWindow = ({ uid }) => {
               type="number"
               name="qty"
               id="qty"
+              min="1"
               onChange={(e) => setStockQuantity(e.target.value)}
               value={stockQuantity}
             />
@@ -47,6 +57,7 @@ const BuyActionWindow = ({ uid }) => {
               name="price"
               id="price"
               step="0.05"
+              min="0"
               onChange={(e) => setStockPrice(e.target.value)}
               value={stockPrice}
             />
@@ -55,14 +66,19 @@ const BuyActionWindow = ({ uid }) => {
       </div>
 
       <div className="buttons">
-        <span>Margin required ₹140.65</span>
+        <span>Margin required ₹{(stockQuantity * stockPrice).toFixed(2)}</span>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <div>
-          <Link className="btn btn-blue" onClick={handleBuyClick}>
-            Buy
-          </Link>
-          <Link to="" className="btn btn-grey" onClick={handleCancelClick}>
+          <button
+            className="btn btn-blue"
+            onClick={handleBuyClick}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Buy"}
+          </button>
+          <button className="btn btn-grey" onClick={handleCancelClick}>
             Cancel
-          </Link>
+          </button>
         </div>
       </div>
     </div>
