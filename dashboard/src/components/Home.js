@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     const verifyCookie = async () => {
        const { data } = await axios.post(
-         "http://localhost:8000",
+         "https://stocknest-vtp4.onrender.com",
          {},
          { withCredentials: true }
        );
@@ -23,7 +23,7 @@ const Home = () => {
        setUsername(user);
        return status
          ? navigate('/')
-         : (removeCookie("token"), window.location.href="http://localhost:3001/login");
+         : (removeCookie("token"), window.location.href="https://stocknest-seven.vercel.app/login");
         // :navigate('/')
     };
     verifyCookie();

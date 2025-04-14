@@ -16,7 +16,7 @@ const BuyActionWindow = ({ uid }) => {
     setErrorMessage("");
 
     try {
-      await axios.post("http://localhost:8000/newOrder", {
+      await axios.post("https://stocknest-vtp4.onrender.com/newOrder", {
         name: uid,
         qty: Number(stockQuantity), // Convert to number
         price: Number(stockPrice), // Convert to number
