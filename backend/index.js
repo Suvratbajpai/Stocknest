@@ -26,8 +26,8 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(cors());
 
 const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:3001", 
+  "https://stocknest-seven.vercel.app/",
+  "https://stocknestdashboard.vercel.app/", 
 ];
 
 app.use(cors({

@@ -40,7 +40,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/login",
+        "https://stocknest-vtp4.onrender.com/login",
         {
           ...inputValue,
         },
@@ -52,7 +52,7 @@ const Login = () => {
         setSuccessMessage(message);
         setTimeout(() => {
           window.location.href =
-            "http://localhost:3001/";
+            "https://stocknestdashboard.vercel.app/";
           console.log(data);
         }, 1000);
       } else {

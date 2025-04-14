@@ -25,7 +25,7 @@ function SignUp() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/signup",
+        "https://stocknest-vtp4.onrender.com/signup",
         { email, password, username },
         { withCredentials: true }
       );
