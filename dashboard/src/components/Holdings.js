@@ -7,6 +7,13 @@ import { VerticalGraph } from "./VerticalGraph";
 const Holdings = () => {
   const [allHoldings, setAllHoldings] = useState([]);
 
+  // useEffect(() => {
+  //   axios.get("http://localhost:8000/allHoldings").then((res) => {
+  //     // console.log(res.data);
+  //     setAllHoldings(res.data);
+  //   });
+  // }, []);
+
   useEffect(() => {
     axios.get("https://stocknest-vtp4.onrender.com/allHoldings").then((res) => {
       // console.log(res.data);

@@ -15,6 +15,7 @@ const Home = () => {
     const verifyCookie = async () => {
        const { data } = await axios.post(
          "https://stocknest-vtp4.onrender.com",
+        //  "http://localhost:8000/",
          {},
          { withCredentials: true }
        );

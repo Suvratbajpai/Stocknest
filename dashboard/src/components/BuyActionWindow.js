@@ -15,6 +15,22 @@ const BuyActionWindow = ({ uid }) => {
     setIsSubmitting(true);
     setErrorMessage("");
 
+  //   try {
+  //     await axios.post("http://localhost:8000/newOrder", {
+  //       name: uid,
+  //       qty: Number(stockQuantity), // Convert to number
+  //       price: Number(stockPrice), // Convert to number
+  //       mode: "BUY",
+  //     });
+  //     closeBuyWindow(); // Close the window on success
+  //   } catch (error) {
+  //     console.error("Error placing order:", error.message);
+  //     setErrorMessage("Failed to place the order. Please try again.");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
     try {
       await axios.post("https://stocknest-vtp4.onrender.com/newOrder", {
         name: uid,

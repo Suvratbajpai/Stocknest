@@ -30,6 +30,11 @@ const allowedOrigins = [
   "https://stocknestdashboard.vercel.app/", 
 ];
 
+// const allowedOrigins = [
+//   "http://localhost:3000",
+//   "http://localhost:3001", 
+// ];
+
 app.use(cors({
   origin: function (origin, callback) {
     // allow requests with no origin (like mobile apps or curl requests)
